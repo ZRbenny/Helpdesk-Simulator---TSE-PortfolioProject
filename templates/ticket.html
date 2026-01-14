@@ -4,113 +4,7 @@
     <meta charset="utf-8" />
     <title>{{ ticket.title }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <style>
-    .log-section {
-        margin-top: 30px;
-        background: white;
-        padding: 20px;
-        border-radius: 5px;
-    }
-    
-    .log-filters {
-        margin-bottom: 20px;
-        padding: 10px;
-        background: #f8f9fa;
-        border-radius: 5px;
-    }
-    
-    .log-filters a {
-        display: inline-block;
-        margin-right: 10px;
-        padding: 5px 15px;
-        background: #e9ecef;
-        border-radius: 3px;
-        text-decoration: none;
-    }
-    
-    .log-filters a:hover {
-        background: #dee2e6;
-    }
-    
-    .log-filters a.active {
-        background: #0066cc;
-        color: white;
-    }
-    
-    .log-entry {
-        font-family: 'Courier New', monospace;
-        font-size: 13px;
-        padding: 8px;
-        border-left: 3px solid #ccc;
-        margin-bottom: 5px;
-        background: #f8f9fa;
-    }
-    
-    .log-entry.ERROR {
-        border-left-color: #dc3545;
-        background: #fff5f5;
-    }
-    
-    .log-entry.WARN {
-        border-left-color: #ffc107;
-        background: #fffef5;
-    }
-    
-    .log-entry.INFO {
-        border-left-color: #28a745;
-    }
-    
-    .log-level {
-        font-weight: bold;
-        margin-right: 10px;
-    }
-    
-    .log-level.ERROR { color: #dc3545; }
-    .log-level.WARN { color: #ffc107; }
-    .log-level.INFO { color: #28a745; }
-    
-    .log-timestamp {
-        color: #6c757d;
-        margin-right: 10px;
-    }
-    
-    .issues-container {
-        margin-bottom: 20px;
-    }
-    
-    .issue-card {
-        padding: 12px;
-        margin: 8px 0;
-        border-radius: 5px;
-        border-left: 4px solid;
-    }
-    
-    .issue-card.severity-critical {
-        background: #fee;
-        border-left-color: #dc3545;
-    }
-    
-    .issue-card.severity-high {
-        background: #fff3cd;
-        border-left-color: #ffc107;
-    }
-    
-    .issue-card.severity-medium {
-        background: #d1ecf1;
-        border-left-color: #17a2b8;
-    }
-    
-    .issue-severity {
-        display: inline-block;
-        background: #333;
-        color: white;
-        padding: 2px 8px;
-        border-radius: 3px;
-        font-size: 11px;
-        font-weight: bold;
-        margin-right: 8px;
-    }
-</style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='ticket.css') }}">
 </head>
 <body>
     <p><a href="/">← Back to tickets</a></p>
@@ -146,6 +40,77 @@
         </details>
     </div>
     {% endif %}
+
+    <!-- Resolution Form Section -->
+    <div class="log-section">
+        <h2>📝 Document Resolution</h2>
+        
+        {% if resolutions %}
+        <div class="resolutions-history">
+            <h3>Previous Resolutions</h3>
+            {% for res in resolutions %}
+            <div class="resolution-card">
+                <div class="resolution-header">
+                    <strong>Resolved by {{ res.resolved_by }}</strong>
+                    <span class="resolution-date">{{ res.resolved_at }}</span>
+                </div>
+                <p><strong>Root Cause:</strong> {{ res.root_cause }}</p>
+                <p><strong>Solution:</strong> {{ res.solution }}</p>
+                {% if res.prevention %}
+                <p><strong>Prevention:</strong> {{ res.prevention }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <form method="POST" class="resolution-form">
+            <div class="form-group">
+                <label for="root_cause">Root Cause Analysis *</label>
+                <textarea 
+                    id="root_cause" 
+                    name="root_cause" 
+                    required 
+                    rows="3"
+                    placeholder="What caused this issue? (e.g., Redis connection pool exhaustion due to memory leak in session manager)"
+                ></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="solution">Solution Implemented *</label>
+                <textarea 
+                    id="solution" 
+                    name="solution" 
+                    required 
+                    rows="4"
+                    placeholder="What steps did you take to resolve it? (e.g., 1. Restarted Redis service, 2. Increased connection pool size from 50 to 100, 3. Applied memory leak patch)"
+                ></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="prevention">Prevention Strategy</label>
+                <textarea 
+                    id="prevention" 
+                    name="prevention" 
+                    rows="3"
+                    placeholder="How can we prevent this in the future? (e.g., Add Redis connection monitoring alerts, implement connection pool auto-scaling)"
+                ></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="resolved_by">Resolved By *</label>
+                <input 
+                    type="text" 
+                    id="resolved_by" 
+                    name="resolved_by" 
+                    required 
+                    placeholder="Your name"
+                />
+            </div>
+            
+            <button type="submit" class="submit-btn">Save Resolution</button>
+        </form>
+    </div>
 
     <!-- Log Viewer Section -->
     <div class="log-section">

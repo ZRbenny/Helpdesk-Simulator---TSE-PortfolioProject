@@ -1,0 +1,202 @@
+/* Ticket Detail Page Styles */
+
+.log-section {
+    margin-top: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.log-filters {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.log-filters a {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 15px;
+    background: #e9ecef;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #333;
+}
+
+.log-filters a:hover {
+    background: #dee2e6;
+    text-decoration: none;
+}
+
+.log-filters a.active {
+    background: #0066cc;
+    color: white;
+}
+
+.log-container {
+    margin-top: 15px;
+}
+
+.log-entry {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    padding: 8px;
+    border-left: 3px solid #ccc;
+    margin-bottom: 5px;
+    background: #f8f9fa;
+}
+
+.log-entry.ERROR {
+    border-left-color: #dc3545;
+    background: #fff5f5;
+}
+
+.log-entry.WARN {
+    border-left-color: #ffc107;
+    background: #fffef5;
+}
+
+.log-entry.INFO {
+    border-left-color: #28a745;
+}
+
+.log-level {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.log-level.ERROR { 
+    color: #dc3545; 
+}
+
+.log-level.WARN { 
+    color: #ffc107; 
+}
+
+.log-level.INFO { 
+    color: #28a745; 
+}
+
+.log-timestamp {
+    color: #6c757d;
+    margin-right: 10px;
+}
+
+.log-message {
+    color: #333;
+}
+
+.issues-container {
+    margin-bottom: 20px;
+}
+
+.issue-card {
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border-left: 4px solid;
+}
+
+.issue-card.severity-critical {
+    background: #fee;
+    border-left-color: #dc3545;
+}
+
+.issue-card.severity-high {
+    background: #fff3cd;
+    border-left-color: #ffc107;
+}
+
+.issue-card.severity-medium {
+    background: #d1ecf1;
+    border-left-color: #17a2b8;
+}
+
+.issue-severity {
+    display: inline-block;
+    background: #333;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.resolution-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group textarea,
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.submit-btn {
+    background: #28a745;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #218838;
+}
+
+.resolutions-history {
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.resolution-card {
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-left: 4px solid #28a745;
+    border-radius: 5px;
+}
+
+.resolution-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.resolution-date {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.resolution-card p {
+    margin: 8px 0;
+}

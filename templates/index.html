@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Helpdesk Simulator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <h1>Helpdesk Simulator</h1>
+
+    <ul>
+        {% for t in tickets %}
+        <li class="severity-{{ t.severity }}">
+            <a href="/tickets/{{ t.id }}">
+                <strong>{{ t.title }}</strong>
+            </a>
+            — Severity: {{ t.severity }}
+        </li>
+        {% endfor %}
+    </ul>
+
+</body>
+
+</html>

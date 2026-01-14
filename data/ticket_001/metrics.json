@@ -1,0 +1,28 @@
+{
+  "collection_period": "2024-01-10 14:28:00 to 14:36:00",
+  "authentication_service": {
+    "avg_response_time_ms": 245,
+    "max_response_time_ms": 890,
+    "total_requests": 156,
+    "failed_requests": 12,
+    "error_rate_percent": 7.69
+  },
+  "session_manager": {
+    "avg_response_time_ms": 89,
+    "max_response_time_ms": 234,
+    "active_sessions": 2341,
+    "session_pool_size": 3000,
+    "pool_utilization_percent": 78.0
+  },
+  "redis_connection": {
+    "avg_response_time_ms": 1250,
+    "max_response_time_ms": 5400,
+    "timeout_count": 8,
+    "success_rate_percent": 91.2
+  },
+  "server_resources": {
+    "cpu_percent": 42,
+    "memory_percent": 89,
+    "disk_io_percent": 23
+  }
+}

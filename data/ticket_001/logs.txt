@@ -1,0 +1,14 @@
+2024-01-10 14:28:45 INFO  [AuthService] User login attempt: user_id=4521
+2024-01-10 14:28:46 INFO  [SessionManager] Session created: session_id=abc123, expires=2024-01-10T16:28:46
+2024-01-10 14:30:12 WARN  [SessionManager] Session abc123 nearing expiration (< 2 min remaining)
+2024-01-10 14:30:45 ERROR [SessionValidator] Session abc123 validation failed: token mismatch
+2024-01-10 14:30:45 INFO  [AuthService] User forced to re-authenticate: user_id=4521
+2024-01-10 14:32:10 INFO  [AuthService] User login attempt: user_id=4521
+2024-01-10 14:32:11 INFO  [SessionManager] Session created: session_id=def456, expires=2024-01-10T16:32:11
+2024-01-10 14:33:58 WARN  [SessionManager] High memory usage detected: 89% of pool allocated
+2024-01-10 14:34:45 ERROR [SessionValidator] Session def456 validation failed: token mismatch
+2024-01-10 14:34:45 INFO  [AuthService] User forced to re-authenticate: user_id=4521
+2024-01-10 14:35:22 ERROR [SessionStore] Failed to persist session to Redis: connection timeout
+2024-01-10 14:35:23 WARN  [SessionStore] Falling back to in-memory session storage
+2024-01-10 14:36:10 INFO  [AuthService] User login attempt: user_id=4521
+2024-01-10 14:36:11 ERROR [SessionValidator] Session validation failed: session not found in store

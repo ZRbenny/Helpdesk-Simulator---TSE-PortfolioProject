@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ticket_001",
+    "title": "Users intermittently cannot log in",
+    "severity": "High",
+    "symptoms": "Some users get 'Invalid session' and are forced to re-login repeatedly.",
+    "steps_to_reproduce": "Attempt login, wait ~2 minutes, refresh page, repeat.",
+    "environment": "Production-like, Chrome/Edge, Windows"
+  },
+  {
+    "id": "ticket_002",
+    "title": "Morning slowdown in dashboard loading",
+    "severity": "Medium",
+    "symptoms": "Dashboard takes 8–15 seconds to load between 8:30–9:30am.",
+    "steps_to_reproduce": "Open dashboard route /dashboard during peak hours.",
+    "environment": "Staging, Chrome, Windows"
+  },
+  {
+    "id": "ticket_003",
+    "title": "Monthly report totals don't match expected values",
+    "severity": "High",
+    "symptoms": "Monthly totals appear inflated for some departments.",
+    "steps_to_reproduce": "Run the monthly summary report for last month and compare to raw entries.",
+    "environment": "Staging, internal report tool"
+  }
+]

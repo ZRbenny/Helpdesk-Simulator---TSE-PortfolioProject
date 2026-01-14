@@ -1,0 +1,27 @@
+{
+  "collection_period": "2024-01-11 08:30:00 to 09:30:00",
+  "dashboard_service": {
+    "avg_response_time_ms": 12400,
+    "max_response_time_ms": 18200,
+    "total_requests": 234,
+    "failed_requests": 3,
+    "error_rate_percent": 1.28
+  },
+  "database_queries": {
+    "avg_query_time_ms": 4200,
+    "max_query_time_ms": 15800,
+    "slow_queries_count": 89,
+    "timeout_count": 12
+  },
+  "database_pool": {
+    "total_connections": 50,
+    "active_connections": 48,
+    "wait_time_ms": 890,
+    "pool_utilization_percent": 96.0
+  },
+  "server_resources": {
+    "cpu_percent": 78,
+    "memory_percent": 62,
+    "disk_io_percent": 91
+  }
+}

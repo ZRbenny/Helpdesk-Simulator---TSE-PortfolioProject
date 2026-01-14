@@ -1,0 +1,13 @@
+2024-01-11 08:32:15 INFO  [DashboardController] Dashboard request received: user_id=7821
+2024-01-11 08:32:16 INFO  [QueryService] Executing query: get_user_metrics
+2024-01-11 08:32:17 WARN  [QueryService] Query took 1200ms, expected <500ms
+2024-01-11 08:32:23 INFO  [QueryService] Executing query: get_department_stats
+2024-01-11 08:32:31 WARN  [QueryService] Query took 8100ms, expected <500ms
+2024-01-11 08:32:31 ERROR [QueryService] Query timeout on table: department_aggregates
+2024-01-11 08:32:31 INFO  [DashboardController] Rendering dashboard with partial data
+2024-01-11 08:45:22 INFO  [DashboardController] Dashboard request received: user_id=4423
+2024-01-11 08:45:23 INFO  [QueryService] Executing query: get_user_metrics
+2024-01-11 08:45:24 WARN  [QueryService] Query took 1150ms, expected <500ms
+2024-01-11 08:45:25 INFO  [QueryService] Executing query: get_department_stats
+2024-01-11 08:45:36 WARN  [QueryService] Query took 11200ms, expected <500ms
+2024-01-11 08:45:36 ERROR [DatabasePool] Connection pool exhausted: 50/50 connections active

@@ -1,6 +1,8 @@
 from flask import Flask, render_template, abort
 import json
 from pathlib import Path
+import sqlite3
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -198,7 +200,77 @@ def analyze_metrics(metrics):
     return issues
 
 
+def init_db():
+    """Initialize the SQLite database with resolutions table."""
+    conn = sqlite3.connect('resolutions.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS resolutions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ticket_id TEXT NOT NULL,
+            root_cause TEXT NOT NULL,
+            solution TEXT NOT NULL,
+            prevention TEXT,
+            resolved_by TEXT,
+            resolved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
+    conn.commit()
+    conn.close()
 
+
+def save_resolution(ticket_id, root_cause, solution, prevention, resolved_by):
+    """
+    Save a resolution to the database.
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        conn = sqlite3.connect('resolutions.db')
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            INSERT INTO resolutions (ticket_id, root_cause, solution, prevention, resolved_by)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (ticket_id, root_cause, solution, prevention, resolved_by))
+        
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"ERROR saving resolution: {e}")
+        return False
+
+
+def get_resolutions(ticket_id):
+    """
+    Get all resolutions for a specific ticket.
+    
+    Returns:
+        List of resolution dictionaries
+    """
+    try:
+        conn = sqlite3.connect('resolutions.db')
+        conn.row_factory = sqlite3.Row  # Return rows as dictionaries
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT * FROM resolutions 
+            WHERE ticket_id = ? 
+            ORDER BY resolved_at DESC
+        ''', (ticket_id,))
+        
+        rows = cursor.fetchall()
+        conn.close()
+        
+        # Convert to list of dictionaries
+        return [dict(row) for row in rows]
+    except Exception as e:
+        print(f"ERROR loading resolutions: {e}")
+        return []
 
 #home page showing list of tickets
 @app.route("/")
@@ -209,9 +281,9 @@ def home():
 
 
 #ticket detail page showing logs for a specific ticket
-@app.route("/tickets/<ticket_id>")
+@app.route("/tickets/<ticket_id>", methods=["GET", "POST"])
 def ticket_detail(ticket_id):
-    from flask import request
+    from flask import request, redirect, url_for
     
     tickets = load_tickets()
     ticket = next((t for t in tickets if t.get("id") == ticket_id), None)
@@ -219,17 +291,29 @@ def ticket_detail(ticket_id):
     if ticket is None:
         abort(404)
     
+    # Handle resolution form submission
+    if request.method == "POST":
+        root_cause = request.form.get("root_cause", "").strip()
+        solution = request.form.get("solution", "").strip()
+        prevention = request.form.get("prevention", "").strip()
+        resolved_by = request.form.get("resolved_by", "").strip()
+        
+        # Validate required fields
+        if root_cause and solution and resolved_by:
+            success = save_resolution(ticket_id, root_cause, solution, prevention, resolved_by)
+            if success:
+                # Redirect to same page to prevent form resubmission
+                return redirect(url_for('ticket_detail', ticket_id=ticket_id))
+        else:
+            # Could add error handling here
+            pass
+    
+    # Load data for display
     level_filter = request.args.get("level")
     logs = load_logs(ticket_id, level_filter)
-    
-    # These two lines are critical:
     metrics = load_metrics(ticket_id)
     issues = analyze_metrics(metrics) if metrics else []
-    
-    # DEBUG: Print what we loaded
-    print(f"DEBUG: Loaded metrics: {bool(metrics)}")
-    print(f"DEBUG: Number of issues detected: {len(issues)}")
-    print(f"DEBUG: Metrics file path: {DATA_DIR / ticket_id / 'metrics.json'}")
+    resolutions = get_resolutions(ticket_id)
     
     return render_template(
         "ticket.html", 
@@ -237,12 +321,16 @@ def ticket_detail(ticket_id):
         logs=logs, 
         current_filter=level_filter,
         metrics=metrics,
-        issues=issues
+        issues=issues,
+        resolutions=resolutions
     )
 
-
-
-
-
 if __name__ == "__main__":
+    # Initialize database on startup
+    init_db()
+    print("Database initialized")
+    
     app.run(debug=True, port=5000)
+
+
+

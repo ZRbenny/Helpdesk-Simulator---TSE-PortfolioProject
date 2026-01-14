@@ -69,11 +69,18 @@ Open browser to `http://localhost:5000`
 - Filter by severity level (ERROR, WARN, INFO)
 - Color-coded log entries for quick scanning
 
-### Milestone 4: Metrics & Heuristics ✅
+### Milestone 4: Metrics & Heuristics 
 - Load performance metrics (response times, error rates, resource usage)
 - **Automated issue detection** using threshold-based heuristics
 - Severity classification (CRITICAL, HIGH, MEDIUM)
 - Visual highlighting of detected anomalies
+
+### Milestone 5: Resolution Tracking
+- Document root cause analysis, solutions, and prevention strategies
+- Store resolutions in SQLite database
+- Display resolution history for each ticket
+- Form validation and data persistence
+- Timestamps and resolver attribution
 
 **Example Heuristics:**
 - Error rate > 5% → Flag as HIGH
@@ -92,10 +99,7 @@ This project demonstrates:
 
 ## 📝 Upcoming Features
 
-- **Milestone 5:** Resolution documentation with SQLite
 - **Milestone 6:** Searchable knowledge base
 - **Milestone 7:** Interview preparation documentation
-
-## 📧 Contact
 
 Built by Benny Zarhin as preparation for Technical Solutions Engineer interviews.

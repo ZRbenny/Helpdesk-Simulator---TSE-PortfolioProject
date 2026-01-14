@@ -20,23 +20,48 @@ Simulate a TSE workflow for diagnosing production issues:
 
 ## 📁 Project Structure
 ```
-tse-helpdesk/
-├── app.py                 # Flask application
-├── requirements.txt       # Python dependencies
-├── data/
-│   ├── tickets.json       # Ticket data
+helpdesk-simulator/
+├── app.py                      # Flask application with routing and database functions
+├── requirements.txt            # Python dependencies
+├── resolutions.db             # SQLite database (auto-created, not in Git)
+├── .gitignore                 # Git ignore rules
+├── README.md                  # Project documentation
+│
+├── data/                      # Ticket data and diagnostic files
+│   ├── tickets.json           # Ticket metadata (ID, title, severity, etc.)
 │   ├── ticket_001/
-│   │   ├── logs.txt       # Application logs
-│   │   └── metrics.json   # Performance metrics
+│   │   ├── logs.txt           # Application logs for ticket_001
+│   │   └── metrics.json       # Performance metrics for ticket_001
 │   └── ticket_002/
-│       ├── logs.txt
-│       └── metrics.json
-├── templates/
-│   ├── index.html         # Ticket list
-│   └── ticket.html        # Ticket detail with logs/metrics
-└── static/
-    └── styles.css         # Styling
+│       ├── logs.txt           # Application logs for ticket_002
+│       └── metrics.json       # Performance metrics for ticket_002
+│
+├── templates/                 # Jinja2 HTML templates
+│   ├── index.html             # Ticket list page
+│   └── ticket.html            # Ticket detail page (logs/metrics/resolution form)
+│
+├── static/                    # CSS stylesheets
+│   ├── styles.css             # Global styles (home page, layout)
+│   └── ticket.css             # Ticket detail page styles
+│
+└── venv/                      # Virtual environment (not in Git)
 ```
+
+### Key Files
+
+- **`app.py`** - Main Flask application with routes, database functions, and business logic
+- **`resolutions.db`** - SQLite database storing resolution history (created automatically on first run)
+- **`data/tickets.json`** - Master list of all support tickets
+- **`data/ticket_XXX/`** - Each ticket has its own folder containing logs and metrics
+- **`templates/`** - HTML templates rendered by Flask with Jinja2
+- **`static/`** - CSS files for styling
+
+### Notes
+
+- `resolutions.db` is excluded from Git via `.gitignore` (contains user data)
+- `venv/` is excluded from Git (Python virtual environment)
+- Each ticket folder follows the naming pattern `ticket_001`, `ticket_002`, etc.
+
 
 ## 💾 Database
 

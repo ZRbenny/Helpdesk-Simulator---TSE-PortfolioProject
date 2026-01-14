@@ -38,6 +38,31 @@ tse-helpdesk/
     └── styles.css         # Styling
 ```
 
+## 💾 Database
+
+The application uses **SQLite** for persistent storage of resolutions.
+
+### Database Schema
+
+**Table: `resolutions`**
+```sql
+CREATE TABLE resolutions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ticket_id TEXT NOT NULL,
+    root_cause TEXT NOT NULL,
+    solution TEXT NOT NULL,
+    prevention TEXT,
+    resolved_by TEXT,
+    resolved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+```
+
+### Auto-Initialization
+
+The database file `resolutions.db` is **automatically created** when you first run the application. The `init_db()` function creates the schema if it doesn't exist.
+
+**Note:** `resolutions.db` is excluded from version control via `.gitignore` as it contains user-generated data.
+
 ## 🚀 Setup & Run
 ```bash
 # Clone repository

@@ -152,4 +152,4 @@ This project demonstrates:
 - **Milestone 6:** Searchable knowledge base
 - **Milestone 7:** Interview preparation documentation
 
-Built by Benny Zarhin as preparation for Technical Solutions Engineer interviews.
+Built by Benny Zarhin as preparation for Technical Solutions Engineer interviews..

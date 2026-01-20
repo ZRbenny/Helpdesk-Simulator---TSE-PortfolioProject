@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Knowledge Base - Helpdesk Simulator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='kb.css') }}">
+</head>
+<body>
+    <div class="kb-header">
+        <p><a href="/">← Back to tickets</a></p>
+        <h1>📚 Knowledge Base</h1>
+        <p class="subtitle">Search past resolutions and learn from previous incidents</p>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-section">
+        <form method="GET" action="/kb" class="search-form">
+            <input 
+                type="text" 
+                name="q" 
+                placeholder="Search by keyword (e.g., 'Redis', 'timeout', 'database')..." 
+                value="{{ search_query }}"
+                class="search-input"
+            />
+            <button type="submit" class="search-btn">🔍 Search</button>
+        </form>
+        
+        {% if search_query %}
+        <p class="search-results">
+            Found <strong>{{ total_count }}</strong> resolution(s) matching "{{ search_query }}"
+            <a href="/kb" class="clear-search">Clear search</a>
+        </p>
+        {% else %}
+        <p class="search-results">
+            Showing <strong>{{ total_count }}</strong> total resolution(s)
+        </p>
+        {% endif %}
+    </div>
+
+    <!-- Resolutions List -->
+    <div class="resolutions-list">
+        {% if resolutions %}
+            {% for res in resolutions %}
+            <div class="kb-card">
+                <div class="kb-card-header">
+                    <h3>
+                        <a href="/tickets/{{ res.ticket_id }}">{{ res.ticket_title }}</a>
+                    </h3>
+                    <div class="kb-meta">
+                        <span class="kb-resolver">👤 {{ res.resolved_by }}</span>
+                        <span class="kb-date">📅 {{ res.resolved_at }}</span>
+                    </div>
+                </div>
+                
+                <div class="kb-content">
+                    <div class="kb-section">
+                        <strong>Root Cause:</strong>
+                        <p>{{ res.root_cause }}</p>
+                    </div>
+                    
+                    <div class="kb-section">
+                        <strong>Solution:</strong>
+                        <p>{{ res.solution }}</p>
+                    </div>
+                    
+                    {% if res.prevention %}
+                    <div class="kb-section">
+                        <strong>Prevention:</strong>
+                        <p>{{ res.prevention }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="kb-footer">
+                    <a href="/tickets/{{ res.ticket_id }}" class="view-ticket-link">View full ticket →</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <h2>📭 No resolutions found</h2>
+                {% if search_query %}
+                <p>No resolutions match your search query.</p>
+                <a href="/kb" class="btn-primary">View all resolutions</a>
+                {% else %}
+                <p>No resolutions have been documented yet.</p>
+                <a href="/" class="btn-primary">Go to tickets</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='ticket.css') }}">
 </head>
 <body>
-    <p><a href="/">← Back to tickets</a></p>
+    <p>
+    <a href="/">← Back to tickets</a> | 
+    <a href="/kb" style="color: #0066cc;">📚 Knowledge Base</a>
+</p>
 
     <h1>{{ ticket.title }}</h1>
     <p><strong>Severity:</strong> {{ ticket.severity }}</p>

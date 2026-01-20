@@ -325,6 +325,64 @@ def ticket_detail(ticket_id):
         resolutions=resolutions
     )
 
+@app.route("/kb")
+def knowledge_base():
+    """Knowledge base page showing all resolutions across all tickets."""
+    from flask import request
+    
+    # Get search query if provided
+    search_query = request.args.get("q", "").strip().lower()
+    
+    try:
+        conn = sqlite3.connect('resolutions.db')
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        # Get all resolutions with ticket info
+        cursor.execute('''
+            SELECT * FROM resolutions 
+            ORDER BY resolved_at DESC
+        ''')
+        
+        rows = cursor.fetchall()
+        conn.close()
+        
+        # Convert to list of dictionaries and add ticket titles
+        all_resolutions = []
+        tickets = load_tickets()
+        ticket_map = {t['id']: t for t in tickets}  # Create lookup dictionary
+        
+        for row in rows:
+            resolution = dict(row)
+            # Add ticket title for display
+            ticket = ticket_map.get(resolution['ticket_id'], {})
+            resolution['ticket_title'] = ticket.get('title', 'Unknown Ticket')
+            
+            # Filter by search query if provided
+            if search_query:
+                searchable_text = (
+                    resolution['root_cause'].lower() + " " +
+                    resolution['solution'].lower() + " " +
+                    resolution.get('prevention', '').lower() + " " +
+                    resolution['ticket_title'].lower()
+                )
+                
+                if search_query in searchable_text:
+                    all_resolutions.append(resolution)
+            else:
+                all_resolutions.append(resolution)
+        
+        return render_template(
+            "kb.html",
+            resolutions=all_resolutions,
+            search_query=search_query,
+            total_count=len(all_resolutions)
+        )
+        
+    except Exception as e:
+        print(f"ERROR loading knowledge base: {e}")
+        return render_template("kb.html", resolutions=[], search_query="", total_count=0)
+    
 if __name__ == "__main__":
     # Initialize database on startup
     init_db()

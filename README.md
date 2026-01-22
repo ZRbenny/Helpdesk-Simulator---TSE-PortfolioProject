@@ -1,21 +1,22 @@
 # Helpdesk Simulator
 
-A Technical Solutions Engineer portfolio project demonstrating diagnostic workflows, log analysis, and metric-based issue detection.
+A Technical Solutions Engineer portfolio project demonstrating diagnostic workflows, log analysis, metric-based issue detection, and resolution tracking.
 
 ## 🎯 Project Goal
 
 Simulate a TSE workflow for diagnosing production issues:
 - View support tickets
 - Analyze application logs with filtering
-- Review performance metrics
-- Identify root causes using automated heuristics
-- Document resolutions (coming in Milestone 5)
+- Review performance metrics with automated issue detection
+- Document resolutions in a searchable database
+- Build institutional knowledge through a knowledge base
 
 ## 🛠️ Tech Stack
 
-- **Backend:** Python, Flask
+- **Backend:** Python 3.x, Flask 2.3.0
+- **Database:** SQLite3
 - **Frontend:** Jinja2 templates, HTML/CSS
-- **Data:** JSON files, SQLite (upcoming)
+- **Data:** JSON files for ticket/log data
 - **Platform:** Windows-compatible, venv-based
 
 ## 📁 Project Structure
@@ -38,11 +39,16 @@ helpdesk-simulator/
 │
 ├── templates/                 # Jinja2 HTML templates
 │   ├── index.html             # Ticket list page
-│   └── ticket.html            # Ticket detail page (logs/metrics/resolution form)
+│   ├── ticket.html            # Ticket detail page (logs/metrics/resolution form)
+│   └── kb.html                # Knowledge base page
 │
 ├── static/                    # CSS stylesheets
 │   ├── styles.css             # Global styles (home page, layout)
-│   └── ticket.css             # Ticket detail page styles
+│   ├── ticket.css             # Ticket detail page styles
+│   └── kb.css                 # Knowledge base page styles
+│
+├── docs/                      # Documentation
+│   └── troubleshooting-playbook.md  # TSE methodology guide
 │
 └── venv/                      # Virtual environment (not in Git)
 ```
@@ -55,13 +61,13 @@ helpdesk-simulator/
 - **`data/ticket_XXX/`** - Each ticket has its own folder containing logs and metrics
 - **`templates/`** - HTML templates rendered by Flask with Jinja2
 - **`static/`** - CSS files for styling
+- **`docs/`** - Documentation and troubleshooting guides
 
 ### Notes
 
 - `resolutions.db` is excluded from Git via `.gitignore` (contains user data)
 - `venv/` is excluded from Git (Python virtual environment)
 - Each ticket folder follows the naming pattern `ticket_001`, `ticket_002`, etc.
-
 
 ## 💾 Database
 
@@ -91,12 +97,17 @@ The database file `resolutions.db` is **automatically created** when you first r
 ## 🚀 Setup & Run
 ```bash
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/helpdesk-simulator.git
-cd helpdesk-simulator
+git clone https://github.com/ZRbenny/Helpdesk-Simulator---TSE-PortfolioProject.git
+cd Helpdesk-Simulator---TSE-PortfolioProject
 
 # Create virtual environment
 python -m venv venv
-venv\Scripts\activate  # Windows
+
+# Activate virtual environment
+# Windows:
+venv\Scripts\activate
+# Mac/Linux:
+source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
@@ -107,49 +118,80 @@ python app.py
 
 Open browser to `http://localhost:5000`
 
-## ✨ Features
+## ✨ Features Completed
 
-### Milestone 1-2: Ticket Management
-- View list of support tickets
-- Drill into individual tickets
-- Display ticket details (severity, symptoms, environment)
+### ✅ Milestone 1-2: Ticket Management
+- View list of support tickets with severity indicators
+- Click through to individual ticket details
+- Display symptoms, reproduction steps, and environment info
 
-### Milestone 3: Log Analysis
-- Parse and display application logs
+### ✅ Milestone 3: Log Analysis
+- Parse and display application logs from text files
 - Filter by severity level (ERROR, WARN, INFO)
-- Color-coded log entries for quick scanning
+- Color-coded log entries for quick visual scanning
+- Monospace font for readability
 
-### Milestone 4: Metrics & Heuristics 
-- Load performance metrics (response times, error rates, resource usage)
-- **Automated issue detection** using threshold-based heuristics
-- Severity classification (CRITICAL, HIGH, MEDIUM)
+### ✅ Milestone 4: Metrics & Automated Issue Detection
+- Load performance metrics from JSON (response times, error rates, resource usage)
+- **Heuristic-based issue detection** using threshold analysis
+- Automatic severity classification (CRITICAL, HIGH, MEDIUM)
 - Visual highlighting of detected anomalies
 
-### Milestone 5: Resolution Tracking
+**Example Heuristics:**
+- Error rate > 5% → HIGH severity
+- Redis response time > 100ms → HIGH severity
+- Connection timeouts > 0 → CRITICAL severity
+- Memory usage > 85% → MEDIUM severity
+- Database pool utilization > 90% → CRITICAL severity
+
+### ✅ Milestone 5: Resolution Tracking
 - Document root cause analysis, solutions, and prevention strategies
 - Store resolutions in SQLite database
 - Display resolution history for each ticket
 - Form validation and data persistence
 - Timestamps and resolver attribution
 
-**Example Heuristics:**
-- Error rate > 5% → Flag as HIGH
-- Redis response time > 100ms → Flag as HIGH
-- Connection timeouts > 0 → Flag as CRITICAL
-- Memory usage > 85% → Flag as MEDIUM
+### ✅ Milestone 6: Knowledge Base
+- Searchable knowledge base across all tickets
+- View all resolutions in one centralized location
+- Search by keyword (root cause, solution, ticket title)
+- Links back to original tickets
+- Clean, professional interface
 
 ## 🎓 TSE Interview Relevance
 
-This project demonstrates:
-1. **Diagnostic methodology:** Logs → Metrics → Root Cause
-2. **Tool building:** Creating utilities to aid troubleshooting
-3. **Pattern recognition:** Identifying anomalies in data
-4. **Customer empathy:** Designing clear, actionable interfaces
-5. **Technical depth:** Understanding system performance indicators
+This project demonstrates key TSE competencies:
 
-## 📝 Upcoming Features
+1. **Diagnostic Methodology**
+   - Systematic approach: Logs → Metrics → Root Cause → Resolution
+   - Pattern recognition in error messages and performance data
+   - Correlation between symptoms and underlying issues
 
-- **Milestone 6:** Searchable knowledge base
-- **Milestone 7:** Interview preparation documentation
+2. **Tool Building**
+   - Created utilities to aid troubleshooting workflows
+   - Automated issue detection to reduce manual analysis
+   - Built reusable knowledge base
 
-Built by Benny Zarhin as preparation for Technical Solutions Engineer interviews..
+3. **Technical Depth**
+   - Understanding of system performance indicators
+   - Database design and CRUD operations
+   - Web application architecture
+
+4. **Communication & Documentation**
+   - Structured resolution documentation
+   - Clear presentation of complex technical data
+   - Building institutional knowledge
+
+5. **Customer Empathy**
+   - Designed intuitive interfaces for non-technical users
+   - Focused on actionable insights, not raw data dumps
+
+## 📖 Documentation
+
+**[Troubleshooting Playbook](docs/troubleshooting-playbook.md)** - Step-by-step guide demonstrating how to use this tool to diagnose production issues using TSE methodology. Includes two complete walkthroughs with real examples.
+
+## 📧 Contact
+
+Built by Benny Zarhin as preparation for Technical Solutions Engineer interviews.
+
+GitHub: [@ZRbenny](https://github.com/ZRbenny)

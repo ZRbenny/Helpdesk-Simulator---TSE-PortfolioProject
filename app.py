@@ -325,6 +325,7 @@ def ticket_detail(ticket_id):
         resolutions=resolutions
     )
 
+#Loads knowledge base page showing all resolutions
 @app.route("/kb")
 def knowledge_base():
     """Knowledge base page showing all resolutions across all tickets."""
